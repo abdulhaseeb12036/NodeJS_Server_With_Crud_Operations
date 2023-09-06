@@ -63,6 +63,7 @@ app.get('/',async (req,res)=>{
         console.log(JSON.stringify(data))
      })
      response.catch((error)=>{
+        console.warn("Finding Error")
         console.log(error)
      })
     
