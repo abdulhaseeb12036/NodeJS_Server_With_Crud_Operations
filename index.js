@@ -27,7 +27,7 @@ async function DeleteData(_data){
 }
 
 async function getData(){
-    let result=await Model.find({})
+    let result=await mongoose.model.find({})
     return result;
 }
 async function updateData(_prev,_new){
