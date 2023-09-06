@@ -58,6 +58,28 @@ app.use(express.json())
 app.get('/',async (req,res)=>{
     
     //  let response=await  Model.find()
+
+    const db = mongoose.connection;
+
+// Event handlers for the database connection
+db.on('error', (error) => {
+  console.error('MongoDB connection error:', error);
+});
+
+db.once('open', () => {
+  console.log('MongoDB connected successfully');
+});
+
+db.on('disconnected', () => {
+  console.log('MongoDB disconnected');
+});
+
+// Check if Mongoose is connected
+if (mongoose.connection.readyState === 1) {
+  console.log('Mongoose is connected to MongoDB');
+} else {
+  console.log('Mongoose is not connected to MongoDB');
+}
     res.send("response")
 
 })
@@ -109,5 +131,5 @@ app.get("/message",(req,resp)=>{
 resp.send("https://weak-red-gopher-shoe.cyclic.app")
 })
 
-app.listen(7000)
+app.listen(process.env.Port || 6000)
 
