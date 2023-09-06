@@ -56,8 +56,8 @@ app.use(express.json())
 
 
 app.get('/',async (req,res)=>{
-    let data=req.body
-    let response=await getData(data)
+    
+    let response=await getData({})
     res.send(response)
 
 })
