@@ -9,10 +9,8 @@ function getModel(Collection_Name,Schema){
 }
  
 async  function getConnected(Database_url){
-   let result= mongoose.connect(Database_url)
-
+   let result=await mongoose.connect(Database_url)
    console.log(result.STATES.connecting)
-   return result;
 }
 
 async function AddData(_data){
@@ -39,19 +37,8 @@ async function updateData(_prev,_new){
 
 
 async function main(){
-  let r= getConnected('mongodb+srv://admin123:admin123@checkdb.xdmf8oz.mongodb.net/?retryWrites=true&w=majority')
-  r.then((data)=>{
-    console.log("Connection Succesfull "+data)
-    console.log("defining Model")
+   await getConnected('mongodb+srv://admin123:admin123@checkdb.xdmf8oz.mongodb.net/?retryWrites=true&w=majority')
     Model=getModel("students",{name:String,roll:Number,semester:String})
- })
- r.catch((error)=>{
-    console.warn("Connectionz Error")
-    console.log(error)
- })
-
-// res.send("response")
- 
 }
 
 
@@ -69,19 +56,9 @@ app.use(express.json())
 
 
 app.get('/',async (req,res)=>{
-
     
-    //  let response= Model.find()
-    //  response.then((data)=>{
-    //     console.log(JSON.stringify(data))
-    //  })
-    //  response.catch((error)=>{
-    //     console.warn("Finding Error")
-    //     console.log(error)
-    //  })
-    
+    //  let response=await  Model.find()
     res.send("response")
-
 
 })
 
