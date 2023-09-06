@@ -54,12 +54,8 @@ app.use(express.json())
 
 
 
-app.get('/',(req,res)=>{
-    res.setHeader("Home",{'Content-Type':"application/json"})
-    res.send("Home Page")
-})
 
-app.get('/list',async (req,res)=>{
+app.get('/',async (req,res)=>{
     let data=req.body
     let response=await getData(data)
     res.send(response)
