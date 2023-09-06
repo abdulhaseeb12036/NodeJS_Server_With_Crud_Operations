@@ -1,7 +1,7 @@
 const mongoose=require('mongoose')
 const express=require('express')
 
-
+var Model
 function getModel(Collection_Name,Schema){
     const _schema=new mongoose.Schema(Schema)
     const _Model=new mongoose.model(Collection_Name,_schema)
@@ -20,14 +20,14 @@ async function AddData(_data){
     return result;
 }
 
-var Model
+
 async function DeleteData(_data){
     let result=await Model.deleteOne(_data)
     return result;
 }
 
 async function getData(){
-    let result=await mongoose.model.find({})
+    let result=await Model.find({})
     return result;
 }
 async function updateData(_prev,_new){
@@ -57,7 +57,7 @@ app.use(express.json())
 
 app.get('/',async (req,res)=>{
     
-    // let response=await getData()
+     let response=await  Model.find({})
     res.send("response")
 
 })
