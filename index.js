@@ -38,6 +38,7 @@ async function updateData(_prev,_new){
 
 async function main(){
    await getConnected('mongodb+srv://admin123:admin123@checkdb.xdmf8oz.mongodb.net/?retryWrites=true&w=majority')
+   Model=getModel("students",{name:String,roll:Number,semester:String})
 }
 
 
@@ -55,7 +56,7 @@ app.use(express.json())
 
 
 app.get('/',async (req,res)=>{
-    Model=getModel("students",{name:String,roll:Number,semester:String})
+
     
      let response= Model.find()
      response.then((data)=>{
