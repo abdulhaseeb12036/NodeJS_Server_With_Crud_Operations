@@ -26,8 +26,8 @@ async function DeleteData(_data){
     return result;
 }
 
-async function getData(_data){
-    let result=await Model.find(_data)
+async function getData(){
+    let result=await Model.find({})
     return result;
 }
 async function updateData(_prev,_new){
@@ -57,7 +57,7 @@ app.use(express.json())
 
 app.get('/',async (req,res)=>{
     
-    let response=await getData({})
+    let response=await getData()
     res.send(response)
 
 })
