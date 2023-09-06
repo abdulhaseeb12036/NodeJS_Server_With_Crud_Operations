@@ -57,7 +57,7 @@ app.use(express.json())
 
 app.get('/',async (req,res)=>{
     
-     let response=await  Model.find({})
+     let response=await  Model.find()
     res.send("response")
 
 })
