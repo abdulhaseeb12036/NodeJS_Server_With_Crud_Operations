@@ -1,0 +1,111 @@
+const mongoose=require('mongoose')
+const express=require('express')
+
+
+function getModel(Collection_Name,Schema){
+    const _schema=new mongoose.Schema(Schema)
+    const _Model=new mongoose.model(Collection_Name,_schema)
+    return _Model
+}
+ 
+async  function getConnected(Database_url){
+   let result=await mongoose.connect(Database_url)
+   console.log(result.STATES.connecting)
+}
+
+async function AddData(_data){
+    let data=new Model(_data)
+    
+    let result=await data.save()
+    return result;
+}
+
+var Model
+async function DeleteData(_data){
+    let result=await Model.deleteOne(_data)
+    return result;
+}
+
+async function getData(_data){
+    let result=await Model.find(_data)
+    return result;
+}
+async function updateData(_prev,_new){
+    let result=await Model.updateOne(_prev,{$set:_new})
+    return result;
+}
+
+
+async function main(){
+   await getConnected('mongodb://localhost:/Haseeb')
+    Model=getModel("students",{name:String,roll:Number,semester:String})
+}
+
+
+
+ main()
+console.log("Database connected")
+
+
+
+const app=express()
+app.use(express.json())
+
+
+
+
+app.get('/',(req,res)=>{
+    res.setHeader("Home",{'Content-Type':"application/json"})
+    res.send("Home Page")
+})
+
+app.get('/list',async (req,res)=>{
+    let data=req.body
+    let response=await getData(data)
+    res.send(response)
+
+})
+
+app.post('/add',async (req,res)=>{
+    let data=req.body
+    let response=await AddData(data)
+
+    res.send(response)
+})
+
+app.put('/update',async(req,res)=>{
+    
+    let data=req.body
+    let previous=data.previous;
+    let _new =data._new
+    let response=await updateData(previous,_new);
+    res.send(response)
+
+   
+})
+app.delete('/delete',async(req,res)=>{
+   let data=req.body
+    let response=await DeleteData(data)
+
+    res.send(response)
+})
+
+
+app.get("/search/:key/:key1",async (req,resp)=>{
+    let check=req.params.key
+    let check2=parseInt(req.params.key1)
+    console.log(typeof check)
+    console.log(typeof check2)
+
+    let data=await getData({
+    "$or":[
+        {"name":{$regex:check}},
+        {"roll":{$regex:check}}
+       
+    ]
+})
+    
+ resp.send(data)
+})
+
+app.listen(7000)
