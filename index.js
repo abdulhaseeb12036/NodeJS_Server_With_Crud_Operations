@@ -57,7 +57,14 @@ app.use(express.json())
 app.get('/',async (req,res)=>{
     Model=getModel("students",{name:String,roll:Number,semester:String})
     
-    //  let response=await  Model.find()
+     let response= Model.find()
+     response.then((data)=>{
+        console.log(JSON.stringify(data))
+     })
+     response.catch((error)=>{
+        console.log(error)
+     })
+    
     res.send("response")
 
 
