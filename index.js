@@ -133,8 +133,8 @@ app.get("/search/:key/:key1",async (req,resp)=>{
 })
 
 app.get("/message",(req,resp)=>{
-
-resp.send("https://weak-red-gopher-shoe.cyclic.app")
+  resp.setHeader("Link",{'Content-Type':'text/html'})
+resp.send("https://weak-red-gopher-shoe.cyclic.app ")
 })
 
 app.listen(process.env.Port || 6000)
